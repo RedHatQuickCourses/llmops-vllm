@@ -1,60 +1,32 @@
-## Getting started with a new training content repository
+# Optimizing vLLM Performance
 
-- Open the [course-starter-template](https://github.com/RedHatQuickCourses/course-starter-template)
+## Introduction
 
-- Click on `Use This template` button and select `Create a new repository` option.
+**Course Title:** Optimizing vLLM Performance
 
-![use-this-template.png](./images/use-this-template.png)
+**Description:**
+This hands-on course provides a practical guide to tuning the vLLM engine for maximum efficiency on Red Hat OpenShift AI. You will learn to move beyond default settings to systematically optimize a deployed Large Language Model for a real-world chat application scenario. The course covers establishing a performance baseline with GuideLLM, iteratively tuning core engine parameters, and demonstrating the significant performance gains achieved by leveraging model quantization.
 
-- On `Create a new repository` page, Select the options as highlighted in the below image and then click `Create repository` button at the bottom of the page.
+**Duration:** 2 hours
 
-![create-new-repo.png](./images/create-new-repo.png)
+---
 
-- Clone this repository on your local system:
-```
-git clone git@github.com:RedHatQuickCourses/my-training-repository.git
-```
-NOTE: Use your repository url in the above command.
+## Objectives
 
-- Go in to the course repository directory and initialize the course.
-``` 
-cd my-training-repository/
-sh course-init.sh --type bfx --lab demo
-```
-NOTE: If you are using Mac, use *zsh* in place of *sh* in the above command.
+On completing this course, you should be able to:
 
-Sample output:
-```
-Initializing my-training-repository . . . done
+* Establish a performance baseline for a deployed LLM using the GuideLLM benchmarking pipeline.
+* Systematically tune key vLLM parameters, such as `max-model-len` and `max-num-seqs`, and measure their impact on performance.
+* Deploy a quantized model and quantitatively compare its latency and throughput against a full-precision model.
+* Apply an iterative optimization methodology (measure, tune, validate) to improve resource utilization and reduce serving costs.
 
-Please replace the specified strings in the files below and commit the changes before proceeding with the course development.
-antora.yml:title: REPLACE Course Title
-```
+---
 
-- Edit the files prompted by course initialization script.
+## Prerequisites
 
-- Commit the changes done by course initialization script and your manual edits.
-```
- git status 
- git add -A; git commit -m "course initialization"
- git push origin main 
-```
+This course assumes that you have the following prior experience:
 
-- Browse your git repository url 
-
-- On your github repo page, on left hand side pane, click on settings gear icon near `About` heading.
-
-- Click `Use your GitHub Pages website` option to select (checked) it and then click `Save changes` button.
-
-![github-pages-setting](./images/github-pages-setting.png)
-
-- You should now see the link to access the rendered content within that same block.
-
-![quickcourse-rendered-url](./images/quickcourse-rendered-url.png)
-
-FIXME: highlight the relevant area on images.
-
-**SEE ALSO**
-
-- [Development using devspace](./DEVSPACE.md)
-- [Guideline for editing your content](./USAGEGUIDE.adoc)
+* Foundational knowledge of Large Language Models and vLLM serving concepts.
+* Completion of the "Model Performance Benchmarking with GuideLLM" course or equivalent experience.
+* Familiarity with using the OpenShift command-line (`oc`) and deploying applications with Helm.
+* Access to a Red Hat OpenShift AI cluster with an available GPU node.
