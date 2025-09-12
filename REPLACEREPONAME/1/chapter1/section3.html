@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Section 3 :: FIXME Course Title</title>
+    <title>Untitled :: FIXME Course Title</title>
     <link rel="prev" href="section2.html">
-    <link rel="next" href="../chapter2/index.html">
+    <link rel="next" href="section4.html">
     <meta name="generator" content="Antora 3.1.3">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <script>var uiRootPath = '../../../_'</script>
@@ -55,16 +55,19 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Chapter 1</a>
+    <a class="nav-link" href="index.html">Course: Optimizing vLLM Performance</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section1.html">Section 1</a>
+    <a class="nav-link" href="section1.html">section1.adoc</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section2.html">Section 2</a>
+    <a class="nav-link" href="section2.html">section2.adoc</a>
   </li>
   <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="section3.html">Section 3</a>
+    <a class="nav-link" href="section3.html">section3.adoc</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section4.html">section4.adoc</a>
   </li>
 </ul>
   </li>
@@ -135,8 +138,8 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">FIXME Course Title</a></li>
-    <li><a href="index.html">Chapter 1</a></li>
-    <li><a href="section3.html">Section 3</a></li>
+    <li><a href="index.html">Course: Optimizing vLLM Performance</a></li>
+    <li><a href="section3.html">section3.adoc</a></li>
   </ul>
 </nav>
 </div>
@@ -145,26 +148,80 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Section 3</h1>
-<div class="ulist">
-<ul>
+<div class="sect1">
+<h2 id="_module_3_advanced_optimization_with_quantization"><a class="anchor" href="#_module_3_advanced_optimization_with_quantization"></a>Module 3: Advanced Optimization with Quantization</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Tuning engine parameters is effective, but <strong>quantization</strong> is arguably the most impactful change you can make for performance. By reducing the model&#8217;s precision, we shrink its memory footprint, allowing for faster data movement and arithmetic on the GPU.</p>
+</div>
+<div class="paragraph">
+<p>In this module, we will deploy a pre-quantized <code>w8a8</code> (8-bit weights, 8-bit activations) version of our model and compare its performance directly against the full-precision version.</p>
+</div>
+<div class="sect2">
+<h3 id="_3_1_deploying_the_quantized_model"><a class="anchor" href="#_3_1_deploying_the_quantized_model"></a>3.1 Deploying the Quantized Model</h3>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>Create multiple copies of this section as needed.</p>
+<p>Revert your <code>values.yaml</code> file to the original optimal settings, but change the model <code>uri</code> to point to the quantized version.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">deploymentMode: RawDeployment
+
+fullnameOverride: granite-8b
+model:
+  modelNameOverride: granite-8b
+  uri: oci://quay.io/redhat-ai-services/modelcar-catalog:granite-3.1-8b-instruct-quantized.w8a8
+  args:
+    - "--disable-log-requests"
+    - "--max-num-seqs=32"
+    - "--max-model-len=2048"</code></pre>
+</div>
+</div>
 </li>
 <li>
-<p>Remove any unnecessary sections or chapter pages.</p>
+<p>Redeploy the model using Helm.</p>
 </li>
 <li>
-<p>Customize the section as appropriate.</p>
+<p>Edit your <code>guidellm-pipelinerun.yaml</code> to test the full range of concurrent users again: set <code>rate</code> to <code>1.0, 4.0, 8.0, 16.0</code>.</p>
 </li>
 <li>
-<p>Ensure that each page contains a manageable amount of content.</p>
+<p>Run the pipeline.</p>
 </li>
-</ul>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_2_comparing_quantized_vs_unquantized_performance"><a class="anchor" href="#_3_2_comparing_quantized_vs_unquantized_performance"></a>3.2 Comparing Quantized vs. Unquantized Performance</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Once the pipeline finishes, go to your Jupyter notebook.</p>
+</li>
+<li>
+<p>The first cell will download the latest benchmark file (from the quantized model run).</p>
+</li>
+<li>
+<p>Modify the subsequent cells to load both your original results (<code>benchmark_1.txt</code>) and the new results.</p>
+</li>
+<li>
+<p>Generate the comparative plot. Your chart should look similar to the one below, showing a significant performance improvement (up to 2x speedup) for the quantized model across all levels of concurrency.</p>
+<div class="imageblock unresolved">
+<div class="content">
+<img src="quant_vs_unquant.png" alt="Quantized vs. Unquantized Performance">
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This exercise clearly demonstrates the power of quantization as a primary tool for performance optimization.</p>
+</div>
+</div>
+</div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="section2.html">Section 2</a></span>
-  <span class="next"><a href="../chapter2/index.html">Chapter 2</a></span>
+  <span class="prev"><a href="section2.html">section2.adoc</a></span>
+  <span class="next"><a href="section4.html">section4.adoc</a></span>
 </nav>
 </article>
   </div>

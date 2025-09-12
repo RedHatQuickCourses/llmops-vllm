@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Chapter 1 :: FIXME Course Title</title>
+    <title>Course: Optimizing vLLM Performance :: FIXME Course Title</title>
     <link rel="prev" href="../LABENV/index.html">
     <link rel="next" href="section1.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -55,16 +55,19 @@
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Chapter 1</a>
+    <a class="nav-link" href="index.html">Course: Optimizing vLLM Performance</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section1.html">Section 1</a>
+    <a class="nav-link" href="section1.html">section1.adoc</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section2.html">Section 2</a>
+    <a class="nav-link" href="section2.html">section2.adoc</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section3.html">Section 3</a>
+    <a class="nav-link" href="section3.html">section3.adoc</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section4.html">section4.adoc</a>
   </li>
 </ul>
   </li>
@@ -135,7 +138,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">FIXME Course Title</a></li>
-    <li><a href="index.html">Chapter 1</a></li>
+    <li><a href="index.html">Course: Optimizing vLLM Performance</a></li>
   </ul>
 </nav>
 </div>
@@ -144,23 +147,50 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Chapter 1</h1>
-<div class="paragraph">
-<p>In this section, we cover&#8230;&#8203; FIXME</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Add or remove section entries in the <code>antora.yaml</code> file as needed.</p>
-</li>
-<li>
-<p>Ensure you create or delete the corresponding directory for the chapter accordingly.</p>
+<h1 class="page">Course: Optimizing vLLM Performance</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_introduction_to_vllm_performance_optimization">1. Introduction to vLLM Performance Optimization</a>
+<ul class="sectlevel2">
+<li><a href="#_why_performance_optimization_is_critical">1.1. Why Performance Optimization is Critical</a></li>
+</ul>
 </li>
 </ul>
 </div>
+<div class="sect1">
+<h2 id="_introduction_to_vllm_performance_optimization"><a class="anchor" href="#_introduction_to_vllm_performance_optimization"></a>1. Introduction to vLLM Performance Optimization</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Welcome to the course on vLLM Performance Optimization. Now that you know how to deploy and benchmark a model, it&#8217;s time to tune its performance for real-world production workloads. This course focuses on maximizing inference efficiency using vLLM tuning techniques that can dramatically improve latency and throughput without requiring additional hardware.</p>
+</div>
+<div class="sect2">
+<h3 id="_why_performance_optimization_is_critical"><a class="anchor" href="#_why_performance_optimization_is_critical"></a>1.1. Why Performance Optimization is Critical</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>User Experience</strong>: Sub-second response times, especially Time to First Token (TTFT), are essential for interactive applications like chatbots and coding assistants.</p>
+</li>
+<li>
+<p><strong>Cost Efficiency</strong>: Better performance means serving more users with the same infrastructure, directly reducing the cost per request and improving ROI.</p>
+</li>
+<li>
+<p><strong>Scalability</strong>: Optimized models can handle higher concurrent user loads without performance degradation, ensuring a reliable service.</p>
+</li>
+<li>
+<p><strong>Resource Utilization</strong>: Proper tuning maximizes GPU utilization, ensuring you get the most value from your expensive hardware.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>By the end of this course, you will be able to systematically tune key vLLM parameters, measure the impact of your changes, and configure a model for optimal performance based on specific use case requirements.</p>
+</div>
+</div>
+</div>
+</div>
 <nav class="pagination">
   <span class="prev"><a href="../LABENV/index.html">Lab Environment</a></span>
-  <span class="next"><a href="section1.html">Section 1</a></span>
+  <span class="next"><a href="section1.html">section1.adoc</a></span>
 </nav>
 </article>
   </div>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>An Example Quick Course :: FIXME Course Title</title>
+    <title>Optimizing vLLM Performance :: FIXME Course Title</title>
     <link rel="next" href="LABENV/index.html">
     <meta name="generator" content="Antora 3.1.3">
     <link rel="stylesheet" href="../../_/css/site.css">
@@ -54,16 +54,19 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="chapter1/index.html">Chapter 1</a>
+    <a class="nav-link" href="chapter1/index.html">Course: Optimizing vLLM Performance</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="chapter1/section1.html">Section 1</a>
+    <a class="nav-link" href="chapter1/section1.html">section1.adoc</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="chapter1/section2.html">Section 2</a>
+    <a class="nav-link" href="chapter1/section2.html">section2.adoc</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="chapter1/section3.html">Section 3</a>
+    <a class="nav-link" href="chapter1/section3.html">section3.adoc</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="chapter1/section4.html">section4.adoc</a>
   </li>
 </ul>
   </li>
@@ -143,19 +146,19 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">An Example Quick Course</h1>
+<h1 class="page">Optimizing vLLM Performance</h1>
 <div class="sect1">
 <h2 id="_introduction"><a class="anchor" href="#_introduction"></a>Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Course Title: Course title FIXME</p>
+<p>Course Title: Optimizing vLLM Performance</p>
 </div>
 <div class="paragraph">
 <p>Description:
-Course description FIXME</p>
+This hands-on course provides a practical guide to tuning the vLLM engine for maximum efficiency on Red Hat OpenShift AI. You will learn to move beyond default settings to systematically optimize a deployed Large Language Model for a real-world chat application scenario. The course covers establishing a performance baseline with GuideLLM, iteratively tuning core engine parameters, and demonstrating the significant performance gains achieved by leveraging model quantization.</p>
 </div>
 <div class="paragraph">
-<p>Duration: FIXME hours</p>
+<p>Duration: 2 hours</p>
 </div>
 </div>
 </div>
@@ -168,13 +171,16 @@ Course description FIXME</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Observable, measurable objective&#8230;&#8203;</p>
+<p>Establish a performance baseline for a deployed LLM using the GuideLLM benchmarking pipeline.</p>
 </li>
 <li>
-<p>Observable, measurable objective&#8230;&#8203;</p>
+<p>Systematically tune key vLLM parameters, such as <code>max-model-len</code> and <code>max-num-seqs</code>, and measure their impact on performance.</p>
 </li>
 <li>
-<p>Observable, measurable objective&#8230;&#8203;</p>
+<p>Deploy a quantized model and quantitatively compare its latency and throughput against a full-precision model.</p>
+</li>
+<li>
+<p>Apply an iterative optimization methodology (measure, tune, validate) to improve resource utilization and reduce serving costs.</p>
 </li>
 </ul>
 </div>
@@ -189,13 +195,16 @@ Course description FIXME</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Course or experience&#8230;&#8203;</p>
+<p>Foundational knowledge of Large Language Models and vLLM serving concepts.</p>
 </li>
 <li>
-<p>Course or experience&#8230;&#8203;</p>
+<p>Completion of the "Model Performance Benchmarking with GuideLLM" course or equivalent experience.</p>
 </li>
 <li>
-<p>Course or experience&#8230;&#8203;</p>
+<p>Familiarity with using the OpenShift command-line (<code>oc</code>) and deploying applications with Helm.</p>
+</li>
+<li>
+<p>Access to a Red Hat OpenShift AI cluster with an available GPU node.</p>
 </li>
 </ul>
 </div>

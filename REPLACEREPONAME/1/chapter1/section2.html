@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Section 2 :: FIXME Course Title</title>
+    <title>Untitled :: FIXME Course Title</title>
     <link rel="prev" href="section1.html">
     <link rel="next" href="section3.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -55,16 +55,19 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Chapter 1</a>
+    <a class="nav-link" href="index.html">Course: Optimizing vLLM Performance</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section1.html">Section 1</a>
+    <a class="nav-link" href="section1.html">section1.adoc</a>
   </li>
   <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="section2.html">Section 2</a>
+    <a class="nav-link" href="section2.html">section2.adoc</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section3.html">Section 3</a>
+    <a class="nav-link" href="section3.html">section3.adoc</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section4.html">section4.adoc</a>
   </li>
 </ul>
   </li>
@@ -135,8 +138,8 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">FIXME Course Title</a></li>
-    <li><a href="index.html">Chapter 1</a></li>
-    <li><a href="section2.html">Section 2</a></li>
+    <li><a href="index.html">Course: Optimizing vLLM Performance</a></li>
+    <li><a href="section2.html">section2.adoc</a></li>
   </ul>
 </nav>
 </div>
@@ -145,26 +148,86 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Section 2</h1>
-<div class="ulist">
-<ul>
+<div class="sect1">
+<h2 id="_module_2_hands_on_parameter_tuning"><a class="anchor" href="#_module_2_hands_on_parameter_tuning"></a>Module 2: Hands-On Parameter Tuning</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this module, we will systematically adjust key vLLM parameters and re-run our benchmark to observe the impact on performance. This iterative process of "tune, measure, repeat" is the core of performance optimization.</p>
+</div>
+<div class="sect2">
+<h3 id="_2_1_tuning_max_model_len"><a class="anchor" href="#_2_1_tuning_max_model_len"></a>2.1 Tuning <code>--max-model-len</code></h3>
+<div class="paragraph">
+<p>The <code>--max-model-len</code> argument sets the maximum tokens (prompt + response) the server can handle. Setting it too large reserves unnecessary GPU memory for the KV cache, while setting it too small truncates requests.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>Create multiple copies of this section as needed.</p>
+<p>Let&#8217;s observe the effect of increasing this value. Open your <code>values.yaml</code> file and change the args to increase the length to 4096.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">args:
+  - "--disable-log-requests"
+  - "--max-num-seqs=32"
+  - "--max-model-len=4096"
+  - "--max-num-batched-tokens=4096"</code></pre>
+</div>
+</div>
 </li>
 <li>
-<p>Remove any unnecessary sections or chapter pages.</p>
+<p>Redeploy the model with <code>helm uninstall</code> and <code>helm install</code>.</p>
 </li>
 <li>
-<p>Customize the section as appropriate.</p>
+<p>Once deployed, check the pod logs. You will see that the <code>Available KV cache memory</code> has decreased because more memory is reserved for the larger potential sequence length. This highlights the trade-off: supporting longer sequences leaves less memory for handling concurrent batches. For our chat use case (&lt;2048 tokens), the initial value was more efficient.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_2_tuning_max_num_seqs"><a class="anchor" href="#_2_2_tuning_max_num_seqs"></a>2.2 Tuning <code>--max-num-seqs</code></h3>
+<div class="paragraph">
+<p>The <code>--max-num-seqs</code> parameter defines the maximum number of requests that can be processed in a single batch. If this is set too low, the GPU will be under-utilized and requests will queue up, dramatically increasing latency.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Let&#8217;s simulate a misconfiguration. Revert <code>max-model-len</code> to <code>2048</code> in your <code>values.yaml</code>, but set <code>--max-num-seqs=1</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">args:
+  - "--disable-log-requests"
+  - "--max-num-seqs=1"
+  - "--max-model-len=2048"</code></pre>
+</div>
+</div>
 </li>
 <li>
-<p>Ensure that each page contains a manageable amount of content.</p>
+<p>Redeploy the model.</p>
 </li>
-</ul>
+<li>
+<p>Now, edit your <code>guidellm-pipelinerun.yaml</code> to test with just 4 concurrent users by setting <code>rate</code> to <code>4.0</code>.</p>
+</li>
+<li>
+<p>Run the pipeline (<code>oc create -f &#8230;&#8203;</code>).</p>
+</li>
+<li>
+<p>After it finishes, download the new benchmark result in your notebook. Compare the median TTFT for 4 concurrent users from this run to your original <code>benchmark_1.txt</code> file. You will see a massive increase in latency (&gt;6x slower!).</p>
+<div class="imageblock unresolved">
+<div class="content">
+<img src="benchmark-rate4seq1.png" alt="Benchmark with max-num-seqs=1">
+</div>
+</div>
+</li>
+<li>
+<p>If you check the model&#8217;s pod logs during the run, you&#8217;ll see a clear indicator of the problem: <code>Pending: 31 reqs</code>. The engine is being throttled, processing requests one by one while others wait in a queue. This demonstrates how critical it is to set <code>max-num-seqs</code> appropriately for your expected concurrent load.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="section1.html">Section 1</a></span>
-  <span class="next"><a href="section3.html">Section 3</a></span>
+  <span class="prev"><a href="section1.html">section1.adoc</a></span>
+  <span class="next"><a href="section3.html">section3.adoc</a></span>
 </nav>
 </article>
   </div>
