@@ -5,6 +5,7 @@ Congratulations! You have successfully optimized a vLLM deployment by tuning its
 === Summary of Learnings
 
 What You Accomplished:
+
 * **Established a Baseline**: You learned to use GuideLLM to create a repeatable performance baseline, which is the first step in any optimization effort.
 * **Mastered Key Parameters**: You gained hands-on experience tuning `max-model-len` and `max-num-seqs`, understanding their direct impact on memory usage, queuing, and latency.
 * **Applied Quantization**: You deployed a quantized model and quantitatively proved its significant performance benefits over the full-precision version.
