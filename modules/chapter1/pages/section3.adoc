@@ -1,4 +1,4 @@
-== Module 3: Advanced Optimization with Quantization
+= Module 3: Advanced Optimization with Quantization
 
 Tuning engine parameters is effective, but **quantization** is arguably the most impactful change you can make for performance. By reducing the model's precision, we shrink its memory footprint, allowing for faster data movement and arithmetic on the GPU.
 

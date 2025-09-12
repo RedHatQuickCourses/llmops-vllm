@@ -1,4 +1,4 @@
-== Course Wrap-up
+= Course Wrap-up
 
 Congratulations! You have successfully optimized a vLLM deployment by tuning its core parameters and leveraging the power of quantization. You have moved beyond simply deploying a model to engineering a high-performance inference service.
 

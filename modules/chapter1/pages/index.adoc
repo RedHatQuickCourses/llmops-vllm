@@ -1,10 +1,4 @@
 = Course: Optimizing vLLM Performance
-:imagesdir: ../assets/images
-:toc: left
-:toclevels: 3
-:sectnums:
-
-// -- Page Break --
 
 == Introduction to vLLM Performance Optimization
 

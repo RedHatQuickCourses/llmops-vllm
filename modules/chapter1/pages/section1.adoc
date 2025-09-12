@@ -1,4 +1,4 @@
-== Module 1: Establishing a Performance Baseline
+= Module 1: Establishing a Performance Baseline
 
 Before we can optimize, we must measure. In this module, we will deploy a model with a set of initial parameters and use the GuideLLM pipeline to establish a performance baseline. This gives us a starting point to compare our future optimizations against.
 

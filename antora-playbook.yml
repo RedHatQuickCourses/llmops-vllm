@@ -1,6 +1,6 @@
 site:
-  title: FIXME Course Title
-  start_page: REPLACEREPONAME::index.adoc
+  title: Optimizing vLLM Performance
+  start_page: llmops-vllm::index.adoc
 
 content:
   sources:

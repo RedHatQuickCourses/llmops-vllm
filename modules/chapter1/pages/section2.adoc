@@ -1,4 +1,4 @@
-== Module 2: Hands-On Parameter Tuning
+= Module 2: Hands-On Parameter Tuning
 
 In this module, we will systematically adjust key vLLM parameters and re-run our benchmark to observe the impact on performance. This iterative process of "tune, measure, repeat" is the core of performance optimization.
 
