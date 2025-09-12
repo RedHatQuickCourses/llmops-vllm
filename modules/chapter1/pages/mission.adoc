@@ -8,14 +8,14 @@ Welcome, Performance Engineer! Before you start tuning the vLLM engine, let's se
 
 This entire learning path is a series of missions. With baselines for performance and accuracy established, you are now ready to start making improvements.
 
-* **Mission 1: Benchmark the Battlefield with GuideLLM**
-* **Mission 2: Validate Your Ally's Strength with lm-eval-harness**
-* **This Mission: Tune Your Engine with vLLM Optimization**
+* **Mission 1: Model Performance Benchmarking with GuideLLM**
+* **Mission 2: Evaluating Model Accuracy with lm-eval-harness**
+* **This Mission: Optimizing vLLM Performance**
 +
 --
 This is where you become a performance specialist. Your task is to take a model and systematically tune it to make it faster and more efficient, answering the question: "How can I get the most out of my hardware?"
 --
-* **Mission 4: Travel Light and Fast with LLM Compressor**
+* **Mission 4: Model Quantization with LLM Compressor**
 
 === The Rules of Engagement
 
