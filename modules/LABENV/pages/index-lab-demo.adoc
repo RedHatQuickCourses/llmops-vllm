@@ -1,18 +1,52 @@
-= Lab Environment
+= Red Hat Demo Hub: Lab Environment Selection
+
+This section guides you through selecting and launching a suitable lab environment on the Red Hat Demo Platform (RHDP) for this course.
+
+*Interactive Experience - RHDP - RHOAI on OCP on AWS with NVIDIA GPUs*
+++++
+<iframe 
+  src="https://demo.arcade.software/pIzuROOj0NbUY4pEHfxN?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true"
+  width="100%" 
+  height="600px" 
+  frameborder="0" 
+  allowfullscreen
+  webkitallowfullscreen
+  mozallowfullscreen
+  allow="clipboard-write"
+  muted>
+</iframe>
+++++
+
 
 == Instructions to Launch Your Lab on the Red Hat Demo Platform (RHDP)
 
-. **Log in** to the xref:#RHDP-Portal-Links[RHDP portal]
-. **Search** for the catalog entry: **FIXME Lab Catalog Name**.
-. **Click** on the catalog entry in the search results.
+. **Log in** to the xref:#RHDP-Portal-Links[RHDP portal].
+. **Search** for one of the following catalog entries:
+
+[NOTE]
+====
+
+*RHOAI on OCP on AWS with NVIDIA GPUs*
+
+This option provides a flexible OpenShift and OpenShift AI environment that can be customized to replicate or explore various scenarios.
+  
+It includes two worker nodes each with an NVIDIA L4 GPU (24GB each), offering capacity for both model training and inference. For example, you can attach one GPU to a Workbench (Jupyter Notebook) for development and utilize the other for model serving.
+  
+*Author's comment:* Both GPU nodes are the only worker nodes, so cluster resources and services such as pipelines can consume the node memory. Use the large node size if you plan to experiment with OpenShift AI tech preview features.   
+====
+
+
+=== Follow the steps below to deploy your chosen environment.
+
+. **Click** on your selected catalog entry in the search results.
 . On the catalog page, **click** the **Order** button.
 . **Fill out** the required details in the order form.
 . **Review the warning** at the bottom of the form and **check the box** labeled: +
    *“I confirm that I understand the above warnings.”*
 . **Click** the **Order** button to place your lab order.
 
-=== Important Notes:
-- This lab may take approximately **FIXME minutes** to become ready.
+=== Important Notes on Lab Provisioning:
+- These labs may take approximately *120 minutes* to become ready, but you can schedule the start of lab provisioning if desired.
 - You will receive an **email with access details** once your lab environment is ready.
 - You can also **retrieve lab access** directly from the RHDP portal.
 
@@ -22,6 +56,6 @@
 
 [[RHDP-Portal-Links]]
 === RHDP Portal Links
-- RedHat associates: https://demo.redhat.com/[https://demo.redhat.com/,window=_blank]
-- RedHat partners: https://partner.demo.redhat.com/[https://partner.demo.redhat.com/,window=_blank]
+- Red Hat Associates: https://demo.redhat.com/[https://demo.redhat.com/,window=_blank]
+- Red Hat Partners: https://partner.demo.redhat.com/[https://partner.demo.redhat.com/,window=_blank]
 

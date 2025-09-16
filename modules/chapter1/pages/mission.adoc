@@ -1,6 +1,6 @@
 // This section should be placed after the main course introduction.
 
-= Your Place in the Adventure
+= Mission Three
 
 Welcome, Performance Engineer! Before you start tuning the vLLM engine, let's see how this mission fits into your overall adventure in LLMOps. You are learning to master the "AI Factory"—a system where you control the balance between **Performance, Accuracy, and Cost**.
 
