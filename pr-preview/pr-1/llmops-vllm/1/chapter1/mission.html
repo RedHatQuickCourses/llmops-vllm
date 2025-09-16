@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Mission Three :: Optimizing vLLM Performance</title>
+    <link rel="prev" href="../LABENV/index-lab-demo.html">
+    <link rel="next" href="index.html">
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Optimizing vLLM Performance</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="llmops-vllm" data-version="1">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Optimizing vLLM Performance</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../LABENV/index.html">Lab Environments</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../LABENV/index-lab-demo.html">Red Hat Demo Hub: Lab Environment Selection</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="mission.html">Mission Three</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Course: Optimizing vLLM Performance</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section1.html">Module 1: Establishing a Performance Baseline</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section2.html">Module 2: Hands-On Parameter Tuning</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section3.html">Module 3: Advanced Optimization with Quantization</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section4.html">Course Wrap-up</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Optimizing vLLM Performance</span>
+    <span class="version">1</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Optimizing vLLM Performance</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">1</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Optimizing vLLM Performance</a></li>
+    <li><a href="mission.html">Mission Three</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Mission Three</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Welcome, Performance Engineer! Before you start tuning the vLLM engine, let&#8217;s see how this mission fits into your overall adventure in LLMOps. You are learning to master the "AI Factory"—a system where you control the balance between <strong>Performance, Accuracy, and Cost</strong>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_your_mission_log"><a class="anchor" href="#_your_mission_log"></a>Your Mission Log</h3>
+<div class="paragraph">
+<p>This entire learning path is a series of missions. With baselines for performance and accuracy established, you are now ready to start making improvements.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Mission 1: Model Performance Benchmarking with GuideLLM</strong></p>
+</li>
+<li>
+<p><strong>Mission 2: Evaluating Model Accuracy with lm-eval-harness</strong></p>
+</li>
+<li>
+<p><strong>This Mission: Optimizing vLLM Performance</strong></p>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>This is where you become a performance specialist. Your task is to take a model and systematically tune it to make it faster and more efficient, answering the question: "How can I get the most out of my hardware?"</p>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Mission 4: Model Quantization with LLM Compressor</strong></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_rules_of_engagement"><a class="anchor" href="#_the_rules_of_engagement"></a>The Rules of Engagement</h3>
+<div class="paragraph">
+<p>A quick piece of intel: these labs are blueprints, not paint-by-numbers exercises. They are based on real-world patterns from successful customer engagements. You will be starting with a standard, resource-limited OpenShift AI environment.</p>
+</div>
+<div class="paragraph">
+<p>Your challenge is to <strong>adapt these blueprints</strong>. You will have to think like an operator, figuring out how to make these tools work within your constraints to achieve your goals.</p>
+</div>
+<div class="paragraph">
+<p>With the context set, it&#8217;s time to get your hands dirty with performance tuning. Let&#8217;s begin by establishing our baseline.</p>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../LABENV/index-lab-demo.html">Red Hat Demo Hub: Lab Environment Selection</a></span>
+  <span class="next"><a href="index.html">Course: Optimizing vLLM Performance</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
