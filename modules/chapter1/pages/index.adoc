@@ -1,4 +1,4 @@
-= Course: Optimizing vLLM Performance
+= Optimizing vLLM Performance
 
 == Introduction to vLLM Performance Optimization
 
@@ -12,4 +12,17 @@ Welcome to the course on vLLM Performance Optimization. Now that you know how to
 * **Resource Utilization**: Proper tuning maximizes GPU utilization, ensuring you get the most value from your expensive hardware.
 
 By the end of this course, you will be able to systematically tune key vLLM parameters, measure the impact of your changes, and configure a model for optimal performance based on specific use case requirements.
+
+---
+
+==== AI Assistant Case Study: Latency Optimization for granite-3.3-8b-instruct with vLLM
+
+Let's apply our knowledge to a concrete scenario: 
+
+You need to serve granite-3.3-8b-instruct that is integrated with a chat application. Your primary goal is to minimize inference latency, the time it takes for a single request to complete for a given number of concurrent users:
+
+ *  32 users concurrently. 
+ *  With an expected generation length < 2048 tokens. 
+
+As you have limited flexibility to scale GPU resources, you want to understand the key vLLM parameters and strategies to maximize performance before simply adding more hardware.
 
