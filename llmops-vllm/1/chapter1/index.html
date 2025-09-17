@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Course: Optimizing vLLM Performance :: Optimizing vLLM Performance</title>
+    <title>Optimizing vLLM Performance :: Optimizing vLLM Performance</title>
     <link rel="prev" href="mission.html">
     <link rel="next" href="section1.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -47,13 +47,7 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../LABENV/index.html">Lab Environments</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../LABENV/index-lab-demo.html">Red Hat Demo Hub: Lab Environment Selection</a>
-  </li>
-</ul>
+    <a class="nav-link" href="../LABENV/index-lab-demo.html">Red Hat Demo Platform</a>
   </li>
 </ul>
   </li>
@@ -64,16 +58,16 @@
   </li>
   <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Course: Optimizing vLLM Performance</a>
+    <a class="nav-link" href="index.html">Optimizing vLLM Performance</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section1.html">Module 1: Establishing a Performance Baseline</a>
+    <a class="nav-link" href="section1.html">vLLM &amp; Performance Tuning</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section2.html">Module 2: Hands-On Parameter Tuning</a>
+    <a class="nav-link" href="section2.html">Hands-On Parameter Tuning</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section3.html">Module 3: Advanced Optimization with Quantization</a>
+    <a class="nav-link" href="section3.html">Advanced Optimization with Quantization</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="section4.html">Course Wrap-up</a>
@@ -110,8 +104,7 @@
   <a href="../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="../index.html">Optimizing vLLM Performance</a></li>
-    <li><a href="index.html">Course: Optimizing vLLM Performance</a></li>
+    <li><a href="index.html">Optimizing vLLM Performance</a></li>
   </ul>
 </nav>
 </div>
@@ -120,7 +113,7 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Course: Optimizing vLLM Performance</h1>
+<h1 class="page">Optimizing vLLM Performance</h1>
 <div class="sect1">
 <h2 id="_introduction_to_vllm_performance_optimization"><a class="anchor" href="#_introduction_to_vllm_performance_optimization"></a>Introduction to vLLM Performance Optimization</h2>
 <div class="sectionbody">
@@ -148,12 +141,35 @@
 <div class="paragraph">
 <p>By the end of this course, you will be able to systematically tune key vLLM parameters, measure the impact of your changes, and configure a model for optimal performance based on specific use case requirements.</p>
 </div>
+<hr>
+<div class="sect3">
+<h4 id="_ai_assistant_case_study_latency_optimization_for_granite_3_3_8b_instruct_with_vllm"><a class="anchor" href="#_ai_assistant_case_study_latency_optimization_for_granite_3_3_8b_instruct_with_vllm"></a>AI Assistant Case Study: Latency Optimization for granite-3.3-8b-instruct with vLLM</h4>
+<div class="paragraph">
+<p>Let&#8217;s apply our knowledge to a concrete scenario:</p>
+</div>
+<div class="paragraph">
+<p>You need to serve granite-3.3-8b-instruct that is integrated with a chat application. Your primary goal is to minimize inference latency, the time it takes for a single request to complete for a given number of concurrent users:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>32 users concurrently.</p>
+</li>
+<li>
+<p>With an expected generation length &lt; 2048 tokens.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>As you have limited flexibility to scale GPU resources, you want to understand the key vLLM parameters and strategies to maximize performance before simply adding more hardware.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="mission.html">Mission Three</a></span>
-  <span class="next"><a href="section1.html">Module 1: Establishing a Performance Baseline</a></span>
+  <span class="next"><a href="section1.html">vLLM &amp; Performance Tuning</a></span>
 </nav>
 </article>
   </div>

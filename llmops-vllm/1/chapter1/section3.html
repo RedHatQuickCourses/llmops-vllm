@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Module 3: Advanced Optimization with Quantization :: Optimizing vLLM Performance</title>
+    <title>Advanced Optimization with Quantization :: Optimizing vLLM Performance</title>
     <link rel="prev" href="section2.html">
     <link rel="next" href="section4.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -47,13 +47,7 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../LABENV/index.html">Lab Environments</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../LABENV/index-lab-demo.html">Red Hat Demo Hub: Lab Environment Selection</a>
-  </li>
-</ul>
+    <a class="nav-link" href="../LABENV/index-lab-demo.html">Red Hat Demo Platform</a>
   </li>
 </ul>
   </li>
@@ -64,16 +58,16 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Course: Optimizing vLLM Performance</a>
+    <a class="nav-link" href="index.html">Optimizing vLLM Performance</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section1.html">Module 1: Establishing a Performance Baseline</a>
+    <a class="nav-link" href="section1.html">vLLM &amp; Performance Tuning</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section2.html">Module 2: Hands-On Parameter Tuning</a>
+    <a class="nav-link" href="section2.html">Hands-On Parameter Tuning</a>
   </li>
   <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="section3.html">Module 3: Advanced Optimization with Quantization</a>
+    <a class="nav-link" href="section3.html">Advanced Optimization with Quantization</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="section4.html">Course Wrap-up</a>
@@ -110,9 +104,8 @@
   <a href="../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="../index.html">Optimizing vLLM Performance</a></li>
-    <li><a href="index.html">Course: Optimizing vLLM Performance</a></li>
-    <li><a href="section3.html">Module 3: Advanced Optimization with Quantization</a></li>
+    <li><a href="index.html">Optimizing vLLM Performance</a></li>
+    <li><a href="section3.html">Advanced Optimization with Quantization</a></li>
   </ul>
 </nav>
 </div>
@@ -121,7 +114,7 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Module 3: Advanced Optimization with Quantization</h1>
+<h1 class="page">Advanced Optimization with Quantization</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
@@ -132,15 +125,97 @@
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_3_1_deploying_the_quantized_model"><a class="anchor" href="#_3_1_deploying_the_quantized_model"></a>3.1 Deploying the Quantized Model</h3>
+<div class="sect1">
+<h2 id="_quantization_reference_guide"><a class="anchor" href="#_quantization_reference_guide"></a>Quantization Reference Guide</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>FP8: If you have access to NVIDIA H100 GPUs or newer (e.g., B200), FP8 (E4M3 or E5M2) is a game-changer. These GPUs have dedicated FP8 Tensor Cores that
+offer significantly higher throughput compared to FP16. This provides a direct path to lower latency per token without significant accuracy loss
+for Llama 3 models.</p>
+</div>
+<div class="paragraph">
+<p>INT8 (e.g., AWQ): Starting with A100 or even A6000/3090 GPUs, INT8 quantization is an excellent choice. It reduces the model to 8B * 1 byte = 8GB,
+halving the memory footprint and enabling faster integer operations.</p>
+</div>
+<div class="paragraph">
+<p>INT4: If you&#8217;re pushing for absolute minimum latency and can tolerate a small accuracy trade-off, INT4 (e.g., via AWQ or other 4-bit methods)
+can reduce the model to 8B * 0.5 bytes = 4 GB. This is extremely memory-efficient and, on some hardware, can offer further speedups.
+Test accuracy thoroughly with your specific use case, as 4-bit can sometimes be more sensitive.
+Similarly, check out FP4 versions when Nvidia Blackwell hardware is available.</p>
+</div>
+<div class="openblock table-scroll-wrapper">
+<div class="content">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Quantization Type</th>
+<th class="tableblock halign-left valign-top">Recommended Hardware</th>
+<th class="tableblock halign-left valign-top">Key Benefits for Latency</th>
+<th class="tableblock halign-left valign-top">Memory Footprint (for Llama 3 8B)</th>
+<th class="tableblock halign-left valign-top">Accuracy Consideration</th>
+<th class="tableblock halign-left valign-top">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>FP8 (E4M3/E5M2)</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NVIDIA H100 (or newer)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">- Dedicated FP8 Tensor Cores for significantly higher throughput.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8B * 1 byte ~= 8 GB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Minimal accuracy loss for Llama 3 models.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Already a standard for high-performance inference.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>INT8 (e.g., AWQ)</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NVIDIA A100, A6000 (or newer)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">- Halves memory footprint.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8B * 1 byte ~= 8 GB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Generally decent accuracy preservation.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Widely supported (across manufacturers) and fast.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>INT4 (e.g., AWQ)</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NVIDIA A100, A6000 (or newer)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">- Extremely memory-efficient.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8B * 0.5 bytes ~= 4 GB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requires an accuracy trade-off.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pushes for absolute minimum latency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>FP4</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NVIDIA Blackwell (B200)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">- New architecture support for even lower-precision floating-point.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8B * 0.5 bytes ~= 4 GB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Designed to maintain better accuracy than integer 4-bit, but still requires validation.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Emerging standard with the latest hardware (e.g., NVIDIA Blackwell). Look for NVFP4 variants.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="paragraph">
+<p>Please refer to the compatiblity chart <a href="https://docs.vllm.ai/en/latest/features/quantization/supported_hardware.html" class="bare" target="_blank" rel="noopener">https://docs.vllm.ai/en/latest/features/quantization/supported_hardware.html</a> for up to date quantization support in vLLM.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_deploy_the_quantized_version"><a class="anchor" href="#_deploy_the_quantized_version"></a>Deploy the Quantized Version</h2>
+<div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Revert your <code>values.yaml</code> file to the original optimal settings, but change the model <code>uri</code> to point to the quantized version.</p>
-<div class="listingblock">
+<p>Let us try to run a w8a8 int8 model with the original vLLM engine arguments we started with. Update the <em>workshop_code/deploy_vllm/vllm_rhoai_custom_2/values.yaml</em> with the following values. Make sure you update the <strong>uri</strong> with the correct model.</p>
+<div class="listingblock execute">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">deploymentMode: RawDeployment
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">deploymentMode: RawDeployment
 
 fullnameOverride: granite-8b
 model:
@@ -154,46 +229,303 @@ model:
 </div>
 </li>
 <li>
-<p>Redeploy the model using Helm.</p>
-</li>
-<li>
-<p>Edit your <code>guidellm-pipelinerun.yaml</code> to test the full range of concurrent users again: set <code>rate</code> to <code>1.0, 4.0, 8.0, 16.0</code>.</p>
-</li>
-<li>
-<p>Run the pipeline.</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_3_2_comparing_quantized_vs_unquantized_performance"><a class="anchor" href="#_3_2_comparing_quantized_vs_unquantized_performance"></a>3.2 Comparing Quantized vs. Unquantized Performance</h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Once the pipeline finishes, go to your Jupyter notebook.</p>
-</li>
-<li>
-<p>The first cell will download the latest benchmark file (from the quantized model run).</p>
-</li>
-<li>
-<p>Modify the subsequent cells to load both your original results (<code>benchmark_1.txt</code>) and the new results.</p>
-</li>
-<li>
-<p>Generate the comparative plot. Your chart should look similar to the one below, showing a significant performance improvement (up to 2x speedup) for the quantized model across all levels of concurrency.</p>
-<div class="imageblock unresolved">
+<p>Rerun the helm deployment</p>
+<div class="listingblock execute">
 <div class="content">
-<img src="quant_vs_unquant.png" alt="Quantized vs. Unquantized Performance">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">helm uninstall granite-8b &amp;&amp; \
+helm install granite-8b redhat-ai-services/vllm-kserve --version 0.5.11 -f workshop_code/deploy_vllm/vllm_rhoai_custom_2/values.yaml</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>After the model redeploys update the <em>/guidellm-pipeline/pipeline/guidellm-pipelinerun.yaml</em> <strong>rate</strong> to 1.0, 4.0, 8.0, 16.0.</p>
+<div class="imageblock text-left">
+<div class="content">
+<img src="_images/benchmark_rate_1_4_8_16.png" alt="set the rate to 4">
+</div>
+</div>
+</li>
+<li>
+<p>Rerun the guidellm benchmark pipeline.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">oc create -f guidellm-pipeline/pipeline/guidellm-pipelinerun.yaml -n vllm</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>After the pipeline finishes go to your OpenShift AI workbench and open the <em>graph_benchmarks.ipynb</em> file. Execute the first cell to download the latest benchmark file.</p>
+</li>
+<li>
+<p>Copy and paste the code snippet below into the second cell or edit your code to be the same. This code extracts the median TTFT from our first benchmark run with the full weight Granite model and extracts the median TTFT from the most recent benchmark with the quantized version.</p>
+<div class="paragraph">
+<p>Execute the cell.</p>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">#extract the Metadata benchmark and the median TTFTs
+from parse_benchmark_stats import extract_ttft_from_file
+data = extract_ttft_from_file('benchmark_1.txt')
+data2 = extract_ttft_from_file(latest_file)
+print(data)
+print(data2)</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Copy and paste the code snippet below into the third cell or edit your code to be the same. This will generate a graph of the median TTFT for the poission rate for both models.</p>
+<div class="paragraph">
+<p>Execute the cell.</p>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">#graph of median TTFT vs poisson rate
+%pip -q install seaborn
+from seaborn_graph import create_ttft_plot
+create_ttft_plot(data, data2, 'granite-3.3-8b-instruct', 'granite-3.1-8b-instruct-quantized.w8a8')</code></pre>
 </div>
 </div>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>This exercise clearly demonstrates the power of quantization as a primary tool for performance optimization.</p>
+<p>Your chart should look similar to the one below.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/quant_vs_unquant.png" alt="quant_vs_unquantized">
+</div>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>Boom, a 2x speedup!</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_using_a_smaller_model"><a class="anchor" href="#_using_a_smaller_model"></a>Using a Smaller Model</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Following the same principle as quantization, serving a smaller model (when accuracy on task is acceptable) will enable faster response
+times as less data is moved around (model weights+activations) and less sequential computations are involved (generally fewer layers).
+For this particular use-case, consider <code>ibm-granite/granite-3.1-2b-instruct</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_using_mixture_of_expert_models"><a class="anchor" href="#_using_mixture_of_expert_models"></a>Using Mixture of Expert Models</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>While Granite 3 is a strong dense model, for certain latency-sensitive scenarios, considering a Mixture-of-Experts (MoE) model like Mixtral 8x7B could be a
+compelling alternative.</p>
+</div>
+<div class="sect3">
+<h4 id="_why_moe_for_latency"><a class="anchor" href="#_why_moe_for_latency"></a>Why MoE for Latency?</h4>
+<div class="paragraph">
+<p>MoE models have a large total number of parameters (e.g., Mixtral 8x7B has 47B total parameters), but critically, they only activate a sparse subset of these parameters (e.g., 13B for Mixtral 8x7B) for each token generated. This means the actual computational cost per token is significantly lower than a dense model of its total parameter count.Which is especially true when sharding experts over multiple GPUs with MoE especially with vLLM&#8217;s optimized handling of MoE sparsity.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_trade_offs"><a class="anchor" href="#_trade_offs"></a>Trade-offs:</h4>
+<div class="paragraph">
+<p>While MoE models can offer lower inference latency per token due to their sparse activation, they still require enough GPU memory to load the entire model&#8217;s parameters, not just the active ones. So, Mixtral 8x7B will demand more VRAM than Llama 3 8B,
+even if it&#8217;s faster per token. You&#8217;ll need sufficient GPU memory (e.g., a single A100 80GB or multiple smaller GPUs with tensor parallelism) to fit the full 47B parameters.</p>
+</div>
+<div class="paragraph">
+<p>vLLM has strong support for MoE models like Mixtral, including optimizations for their unique sparse compute patterns and dynamic routing.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_consider_when"><a class="anchor" href="#_consider_when"></a>Consider When:</h4>
+<div class="paragraph">
+<p>Your application might benefit from the increased quality often associated with larger (total parameter) MoE models, combined with the per-token speed advantages
+of their sparse computation.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_speculative_decoding"><a class="anchor" href="#_speculative_decoding"></a>Speculative Decoding.</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Speculative decoding is a powerful technique to reduce the generation latency, particularly noticeable for the Time To First Token (TTFT).</p>
+</div>
+<div class="paragraph">
+<p>Speculative decoding is fundamentally a tradeoff: spend a little bit of extra compute to reduce memory movement.
+The extra compute is allocated towards the smaller draft model and consequent proposer verifying step.
+At low request rates, we are memory-bound, so reducing memory movement can really help with latency.
+However, at higher throughputs or batch sizes, we are compute-bound, and speculative decoding can provide worse performance.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/spec_dec.png" alt="spec_dec">
+</div>
+</div>
+<div class="paragraph">
+<p>The graph here from <a href="https://developers.redhat.com/articles/2025/07/01/fly-eagle3-fly-faster-inference-vllm-speculative-decoding#speculative_decoding__a_solution_for_faster_llms" target="_blank" rel="noopener">Red Hat Developer Blog</a>
+highlighs the tradeoffs of speculative decoding at low request rate vs bigger batch sizes.
+Take away message: as long as the number of requests is bound to use a non-intensive amount of GPU resources (lower req/s), spec decoding can provide
+a nice speedup.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Speculative decoding in vLLM is not yet fully optimized and does not always yield intended inter-token latency reductions. In particular, in this case it will fallback to V0 due to
+V1 still not supporting this particular speculation technique. Mind that what we&#8217;re comparing here is not going to be exactly apples to apples, as the V0 and V1 engine have quite
+substantial architectural differences.
+</td>
+</tr>
+</table>
+</div>
+<hr>
+<div class="sect2">
+<h3 id="_speculative_decoding_exercise"><a class="anchor" href="#_speculative_decoding_exercise"></a>Speculative Decoding Exercise:</h3>
+<div class="paragraph">
+<p>You&#8217;ll need to specify a smaller draft model. A good starting point for Llama/granite might be a smaller Llama/granite variant or as in this
+example a speculator trained specifically for our use-case. Let&#8217;s redeploy with the following engine arguments:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Update the workshop_code/deploy_vllm/vllm_rhoai_custom_2/values.yaml with the following values.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">deploymentMode: RawDeployment
+
+fullnameOverride: granite-8b
+model:
+  modelNameOverride: granite-8b
+  uri: oci://quay.io/redhat-ai-services/modelcar-catalog:llama-3.1-8b-instruct-eagle3
+  env:
+    - name: HF_HUB_OFFLINE
+      value: "1"
+  args:
+    - --disable-log-requests
+    - --max-num-seqs=32
+    - --max-model-len=2048
+    - --max-num-batched-tokens=2048
+    - '--speculative-config={"model": "/mnt/models/llama-3.1-8b-instruct-eagle3", "method": "eagle3", "num_speculative_tokens": 4, "draft_tensor_parallel_size": 1}'</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Rerun the helm deployment</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">helm uninstall granite-8b &amp;&amp; \
+helm install granite-8b redhat-ai-services/vllm-kserve --version 0.5.11 -f workshop_code/deploy_vllm/vllm_rhoai_custom_2/values.yaml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>vLLM will spin up an instance with the two models.
+There&#8217;s no free-lunch though, mind that the GPU memory will now be comprised of: the original <code>ibm-granite/granite-3.1-8b-instruct</code> weights + <code>ibm-granite/granite-3.0-8b-instruct-accelerator</code> proposer weights
+ + a KV cache for <strong>both</strong> models.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/spec.png" alt="specized">
+</div>
+</div>
+</li>
+<li>
+<p>Send in a request to the inference endpoint.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl -X POST -H "Content-Type: application/json" -d '{
+    "prompt": "What does Red Hat do?",
+    "max_tokens": 100,
+    "model": "granite-8b"
+}' https://&lt;YOUR-EXTERNAL-INFERENCE-ENDPOINT&gt;/v1/completions | jq</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A key metric to keep an eye on when serving a speculator is the <code>acceptance rate</code>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/spec-decode-log.png" alt="spec decode log">
+</div>
+</div>
+<div class="paragraph">
+<p>This is the percentage of tokens being produced by the speculator that match the ones of the draft model.
+Here we&#8217;re still on the lower side as ideally you would want to see this number be higher.</p>
+</div>
+<div class="paragraph">
+<p>This is tied to major drawback holding back the adoptability of speculative decoding, which is the fact that the speculator needs to be trained specifically for the model you intend to deploy,
+in order to achieve an high acceptance rate.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p><strong>Bonus: Batch Processing Case Study:</strong></p>
+</div>
+<div class="paragraph">
+<p>Throughput Optimization for granite-3.1-8b-instruct with vLLM:</p>
+</div>
+<div class="paragraph">
+<p>What arguments would you change for a batch processing job that analyzes 100,000 customer reviews every night?</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_key_metrics_checklist"><a class="anchor" href="#_key_metrics_checklist"></a>Key Metrics Checklist</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Optimization is an iterative process. As you tune vLLM, continuously monitor key metrics:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Time To First Token (TTFT): Critical for interactive applications.</p>
+</li>
+<li>
+<p>Throughput (Tokens/sec or Requests/sec): To ensure your concurrency goals are met.</p>
+</li>
+<li>
+<p>GPU Utilization: High utilization indicates efficient use of resources.</p>
+</li>
+<li>
+<p>GPU KV cache usage: At very high rates early on into a benchmark, it is an indicator of likely insufficient memory for KV cache.</p>
+</li>
+<li>
+<p>Important engine arguments for customers that don&#8217;t want to send data to the vLLM team</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.vllm.ai/en/stable/usage/usage_stats.html" class="bare" target="_blank" rel="noopener">https://docs.vllm.ai/en/stable/usage/usage_stats.html</a></p>
+</li>
+<li>
+<p>VLLM_NO_USAGE_STATS=1</p>
+</li>
+<li>
+<p>DO_NOT_TRACK=1</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="section2.html">Module 2: Hands-On Parameter Tuning</a></span>
+  <span class="prev"><a href="section2.html">Hands-On Parameter Tuning</a></span>
   <span class="next"><a href="section4.html">Course Wrap-up</a></span>
 </nav>
 </article>
